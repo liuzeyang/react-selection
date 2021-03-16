@@ -1,0 +1,50 @@
+@pop: ~'jason-design-pop';
+
+:root {
+  --ck-color-shadow-drop: rgba(0, 0, 0, 0.15);
+  --ck-color-shadow-drop-active: rgba(0, 0, 0, 0.2);
+}
+.@{pop}-plugin {
+  box-sizing: border-box;
+  display: none;
+  margin: 0;
+  padding: 10px 0 0 0;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 1.5715;
+  position: absolute;
+  z-index: 1030;
+  font-weight: 400;
+  white-space: normal;
+  text-align: left;
+  cursor: pointer;
+
+  .@{pop}-content {
+    box-sizing: border-box;
+    .@{pop}-arrow {
+      left: 50%;
+      box-sizing: border-box;
+      transform: translateX(-50%) rotate(-135deg);
+      top: 6.2px;
+      border-color: #e5e5e5;
+      --ck-drop-shadow: 0 1px 2px 1px var(--ck-color-shadow-drop);
+      --ck-drop-shadow-active: 0 3px 6px 1px var(--ck-color-shadow-drop-active);
+      position: absolute;
+      display: block;
+      width: 8.48528137px;
+      height: 8.48528137px;
+      background: 0 0;
+      border-style: solid;
+      border-width: 4.24264069px;
+    }
+    .@{pop}-inner-content {
+      box-sizing: border-box;
+      box-shadow: 2px, 0 0;
+      min-height: 15px;
+      background: #e5e5e5;
+      color: rgba(0, 0, 0, 0.85);
+      border: 1px solid #e5e5e5;
+      padding: 5px;
+    }
+  }
+}

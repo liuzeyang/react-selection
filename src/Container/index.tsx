@@ -1,64 +1,94 @@
-import React, {useEffect, useRef} from 'react';
-import { debounce } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import './index.less';
+import { PopPluginRef } from './Plugins/pop';
+import { Config, Editor } from './Engine/editor';
 
 type Selections = Selection | null;
-type Editor = {
-    getDom: () => HTMLElement | null;
-    getData: () => string | undefined
-}
+export type Evt =
+  | React.MouseEvent<HTMLDivElement>
+  | React.KeyboardEvent<HTMLDivElement>;
 interface ContainerProps {
-    id: string;
-    onSelect?: (e: Event, selection: Selections) => void;
-    getEditor?: (editor: Editor) => void
+  id: string;
+  config: Config;
+  html: any;
+  onSelect?: (e: Evt, selection: Selections) => void;
+  onInit: (editor: Editor) => void;
 }
 
 /**
- * 
+ *
  * @param id
  * @param value
  * @param onSelect
- * @param getEditor
+ * @param onInit
+ * @param configs
  */
 
-const Container: React.FC<ContainerProps> = ({ id, onSelect, getEditor }) => {
+const Container: React.FC<ContainerProps> = ({
+  id,
+  onSelect,
+  config,
+  html,
+  onInit,
+}) => {
+  // 控制pop
+  const divRef = React.createRef<HTMLDivElement>();
+  const rangeRef = useRef<any>(null);
+  const [editor, setEditor] = useState<Editor>(new Editor());
 
-    const ref: Editor= {
-        getDom(){
-            return document.getElementById(id);
-        },
-        getData(){
-            return document.getElementById(id)?.innerHTML
-        },
+  useEffect(() => {
+    document.execCommand('defaultParagraphSeparator', false, 'p');
+    onInit && onInit(editor);
+    editor.init(config);
+  }, []);
+
+  //
+  useEffect(() => {
+    if (document.getElementById(id) !== null) {
+      (document.getElementById(id) as any).onmousedown = (e: Evt) => {};
+      (document.getElementById(id) as any).onmouseup = (e: Evt) => {
+        e.stopPropagation();
+        const selection: Selections = document.getSelection();
+        const dom = divRef.current;
+        if (selection?.isCollapsed) {
+          dom?.setAttribute('style', 'display: none');
+        } else {
+          let range = selection?.getRangeAt(0);
+          rangeRef.current = range;
+          editor.setRange(range ?? null);
+          dom?.setAttribute(
+            'style',
+            `display: block;top: ${Math.ceil((e as any).offsetY / 20) * 20 +
+              15}px;left:${(e as any).offsetX - 20}px`,
+          );
+          // onSelect && onSelect(e, selection);
+          // selection && selection.removeAllRanges(); // 这个remove还是很重要的
+        }
+      };
+      document.onmouseup = () => {
+        const dom = divRef.current;
+        dom?.setAttribute('style', 'display: none');
+      };
     }
 
-    useEffect(() => {
-        document.execCommand("defaultParagraphSeparator", false, "p");
-        getEditor && getEditor(ref)
-    }, [])
+    return () => {
+      (document.getElementById(id) as any).onmouseup = () => {};
+      document.onmouseup = () => {};
+    };
+  }, [id, onSelect]);
 
-    useEffect(() => {
-        document.onselectionchange = debounce((e) => {
-            console.log('onselectionchange', e);
-            const selection: Selections = document.getSelection();
-            onSelect && onSelect(e, selection);
-            selection && selection.removeAllRanges(); // 这个remove还是很重要的
-        }, 1000)
-        return () => {
-            document.onselectionchange = () => {}
-        }
-    }, [id, onSelect])
-
-    return (
-        <div className='selection-backmark'>
-            <div id={id} className='selection-container' contentEditable={true} spellCheck={false}>
-                ​fsafdsfsdfafsfafsfafdsf
-                1. 数据变量：在生成文章时，系统会用数据源提供的实时数据，作为文章中该变量位置的内容。模板编辑时可以如下例，在要表达今日最高气温数据的位置插入『今日最高气温』这个数据变量。
-                举例：今日最高气温度。    
-                发送到发法法师发  
-            </div>
-        </div>
-    )
+  return (
+    <div className="selection-backmark" style={{ height: 400 }}>
+      <div
+        id={id}
+        className="selection-container"
+        contentEditable={true}
+        spellCheck={true}
+        dangerouslySetInnerHTML={{ __html: html }}
+      ></div>
+      <PopPluginRef ref={divRef} currentRange={rangeRef} editor={editor} />
+    </div>
+  );
 };
 
-export default Container
+export default Container;
