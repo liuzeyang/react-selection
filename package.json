@@ -1,6 +1,6 @@
 {
   "name": "@jason-design/selection",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "publishConfig": {
     "access": "public"
   },
@@ -31,8 +31,8 @@
     ]
   },
   "peerDependencies": {
-    "react": "^16.x",
-    "react-dom": "^16.x"
+    "react": ">=16.x",
+    "react-dom": ">=16.x"
   },
   "dependencies": {
     "lodash": "^4.17.20"
