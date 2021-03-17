@@ -1,5 +1,5 @@
 {
-  "name": "jason-selection",
+  "name": "@jason-design/selection",
   "version": "1.0.0",
   "scripts": {
     "start": "dumi dev",
