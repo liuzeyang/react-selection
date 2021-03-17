@@ -221,7 +221,7 @@ function styleInject(css, ref) {
 }
 
 var css_248z =
-  '.selection-backmark {\n  background-color: #e5e5e5;\n  padding: 1px 20px;\n  position: relative;\n}\n.selection-container {\n  width: 100%;\n  background-color: #fff;\n  box-shadow: 0 0 10px 2px rgba(138, 113, 113, 0.03);\n  border-radius: 4px;\n  outline: none;\n  font-size: 14px;\n  line-height: 20px;\n  padding: 5px;\n}\n.selection-container span {\n  font-size: 14px;\n  line-height: 2em;\n}\n';
+  '.selection-backmark {\n  background-color: #e5e5e5;\n  border: 1px solid #e5e5e5;\n  position: relative;\n}\n.selection-container {\n  width: 100%;\n  box-sizing: border-box;\n  background-color: #fff;\n  box-shadow: 0 0 10px 2px rgba(138, 113, 113, 0.03);\n  border-radius: 4px;\n  outline: none;\n  font-size: 14px;\n  line-height: 20px;\n  padding: 5px;\n}\n.selection-container span {\n  font-size: 14px;\n  line-height: 2em;\n}\n';
 styleInject(css_248z);
 
 var css_248z$1 =
@@ -552,8 +552,7 @@ var Container = function Container(_ref) {
     document.execCommand('defaultParagraphSeparator', false, 'p');
     onInit && onInit(editor);
     editor.init(config);
-  }, []); //
-
+  }, []);
   React.useEffect(
     function() {
       if (document.getElementById(id) !== null) {
@@ -626,9 +625,6 @@ var Container = function Container(_ref) {
     'div',
     {
       className: 'selection-backmark',
-      style: {
-        height: 400,
-      },
     },
     /*#__PURE__*/ React__default['default'].createElement('div', {
       id: id,

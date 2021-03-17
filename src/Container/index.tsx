@@ -43,7 +43,6 @@ const Container: React.FC<ContainerProps> = ({
     editor.init(config);
   }, []);
 
-  //
   useEffect(() => {
     if (document.getElementById(id) !== null) {
       (document.getElementById(id) as any).onmousedown = (e: Evt) => {};
@@ -80,7 +79,7 @@ const Container: React.FC<ContainerProps> = ({
   }, [id, onInit, config]);
 
   return (
-    <div className="selection-backmark" style={{ height: 400 }}>
+    <div className="selection-backmark">
       <div
         id={id}
         className="selection-container"
