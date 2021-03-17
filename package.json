@@ -1,5 +1,5 @@
 {
-  "name": "react-selection",
+  "name": "jason-selection",
   "version": "1.0.0",
   "scripts": {
     "start": "dumi dev",
@@ -26,9 +26,11 @@
       "prettier --parser=typescript --write"
     ]
   },
+  "peerDependencies": {
+    "react": "^16.x"
+  },
   "dependencies": {
-    "lodash": "^4.17.20",
-    "react": "^16.12.0"
+    "lodash": "^4.17.20"
   },
   "devDependencies": {
     "@umijs/test": "^3.0.5",
