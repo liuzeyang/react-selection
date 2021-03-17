@@ -1,9 +1,8 @@
-/// <reference types="react" />
 import { ButtonView, EffectFn } from './buttonView';
 import { Editor } from './editor';
 export declare abstract class AbstractPlugin {
-  private editor;
+  editor: Editor;
   constructor(editor: Editor);
-  abstract init(): string | React.ReactNode;
+  abstract init(): void;
   listenTo(buttonView: ButtonView, effectFn: EffectFn): void;
 }

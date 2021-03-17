@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './index.less';
 import { PopPluginRef } from './Plugins/pop';
 import { Config, Editor } from './Engine/editor';
+import { RenderInBody } from './Plugins/renderInBody';
 
 type Selections = Selection | null;
 export type Evt =
@@ -58,10 +59,11 @@ const Container: React.FC<ContainerProps> = ({
           editor.setRange(range ?? null);
           dom?.setAttribute(
             'style',
-            `display: block;top: ${Math.ceil((e as any).offsetY / 20) * 20 +
-              15}px;left:${(e as any).offsetX - 20}px`,
+            `display: block;top: ${(e as any).clientY}px;left:${(e as any)
+              .clientX -
+              ((dom?.innerText.length ?? 0) * 14 + 12) / 2}px`,
           );
-          // onSelect && onSelect(e, selection);
+          onSelect && onSelect(e, selection);
           // selection && selection.removeAllRanges(); // 这个remove还是很重要的
         }
       };
@@ -75,7 +77,7 @@ const Container: React.FC<ContainerProps> = ({
       (document.getElementById(id) as any).onmouseup = () => {};
       document.onmouseup = () => {};
     };
-  }, [id, onSelect]);
+  }, [id, onInit, config]);
 
   return (
     <div className="selection-backmark" style={{ height: 400 }}>
@@ -86,7 +88,9 @@ const Container: React.FC<ContainerProps> = ({
         spellCheck={true}
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>
-      <PopPluginRef ref={divRef} currentRange={rangeRef} editor={editor} />
+      <RenderInBody>
+        <PopPluginRef ref={divRef} currentRange={rangeRef} editor={editor} />
+      </RenderInBody>
     </div>
   );
 };

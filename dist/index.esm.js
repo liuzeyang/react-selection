@@ -1,5 +1,12 @@
-import React, { forwardRef, useRef, useState, useEffect } from 'react';
+import React, {
+  forwardRef,
+  Component,
+  useRef,
+  useState,
+  useEffect,
+} from 'react';
 import { isFunction, isObject } from 'lodash';
+import ReactDom from 'react-dom';
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -21,6 +28,91 @@ function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
   return Constructor;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    throw new TypeError('Super expression must either be null or a function');
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true,
+    },
+  });
+  if (superClass) _setPrototypeOf(subClass, superClass);
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf
+    ? Object.getPrototypeOf
+    : function _getPrototypeOf(o) {
+        return o.__proto__ || Object.getPrototypeOf(o);
+      };
+  return _getPrototypeOf(o);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf =
+    Object.setPrototypeOf ||
+    function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+
+  return _setPrototypeOf(o, p);
+}
+
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === 'undefined' || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === 'function') return true;
+
+  try {
+    Date.prototype.toString.call(Reflect.construct(Date, [], function() {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError(
+      "this hasn't been initialised - super() hasn't been called",
+    );
+  }
+
+  return self;
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (typeof call === 'object' || typeof call === 'function')) {
+    return call;
+  }
+
+  return _assertThisInitialized(self);
+}
+
+function _createSuper(Derived) {
+  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+  return function _createSuperInternal() {
+    var Super = _getPrototypeOf(Derived),
+      result;
+
+    if (hasNativeReflectConstruct) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return _possibleConstructorReturn(this, result);
+  };
 }
 
 function _slicedToArray(arr, i) {
@@ -371,6 +463,60 @@ var Editor = /*#__PURE__*/ (function() {
   return Editor;
 })();
 
+var RenderInBody = /*#__PURE__*/ (function(_Component) {
+  _inherits(RenderInBody, _Component);
+
+  var _super = _createSuper(RenderInBody);
+
+  function RenderInBody(props) {
+    _classCallCheck(this, RenderInBody);
+
+    return _super.call(this, props);
+  }
+
+  _createClass(RenderInBody, [
+    {
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        //新建一个div标签并塞进body
+        this.popup = document.createElement('div');
+        document.body.appendChild(this.popup);
+
+        this._renderLayer();
+      },
+    },
+    {
+      key: 'componentDidUpdate',
+      value: function componentDidUpdate() {
+        this._renderLayer();
+      },
+    },
+    {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        //在组件卸载的时候，保证弹层也被卸载掉
+        ReactDom.unmountComponentAtNode(this.popup);
+        document.body.removeChild(this.popup);
+      },
+    },
+    {
+      key: '_renderLayer',
+      value: function _renderLayer() {
+        //将弹层渲染到body下的div标签
+        ReactDom.render(this.props.children, this.popup);
+      },
+    },
+    {
+      key: 'render',
+      value: function render() {
+        return null;
+      },
+    },
+  ]);
+
+  return RenderInBody;
+})(Component);
+
 /**
  *
  * @param id
@@ -420,6 +566,8 @@ var Container = function Container(_ref) {
               ? void 0
               : dom.setAttribute('style', 'display: none');
           } else {
+            var _dom$innerText$length;
+
             var range =
               selection === null || selection === void 0
                 ? void 0
@@ -431,10 +579,23 @@ var Container = function Container(_ref) {
               : dom.setAttribute(
                   'style',
                   'display: block;top: '
-                    .concat(Math.ceil(e.offsetY / 20) * 20 + 15, 'px;left:')
-                    .concat(e.offsetX - 20, 'px'),
-                ); // onSelect && onSelect(e, selection);
-            // selection && selection.removeAllRanges(); // 这个remove还是很重要的
+                    .concat(e.clientY, 'px;left:')
+                    .concat(
+                      e.clientX -
+                        (((_dom$innerText$length =
+                          dom === null || dom === void 0
+                            ? void 0
+                            : dom.innerText.length) !== null &&
+                        _dom$innerText$length !== void 0
+                          ? _dom$innerText$length
+                          : 0) *
+                          14 +
+                          12) /
+                          2,
+                      'px',
+                    ),
+                );
+            onSelect && onSelect(e, selection); // selection && selection.removeAllRanges(); // 这个remove还是很重要的
           }
         };
 
@@ -452,7 +613,7 @@ var Container = function Container(_ref) {
         document.onmouseup = function() {};
       };
     },
-    [id, onSelect],
+    [id, onInit, config],
   );
   return /*#__PURE__*/ React.createElement(
     'div',
@@ -471,11 +632,15 @@ var Container = function Container(_ref) {
         __html: html,
       },
     }),
-    /*#__PURE__*/ React.createElement(PopPluginRef, {
-      ref: divRef,
-      currentRange: rangeRef,
-      editor: editor,
-    }),
+    /*#__PURE__*/ React.createElement(
+      RenderInBody,
+      null,
+      /*#__PURE__*/ React.createElement(PopPluginRef, {
+        ref: divRef,
+        currentRange: rangeRef,
+        editor: editor,
+      }),
+    ),
   );
 };
 
