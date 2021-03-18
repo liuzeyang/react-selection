@@ -12,11 +12,26 @@ export class Plugin extends AbstractPlugin {
 
 export interface Config {
   plugins: Array<typeof Plugin>;
+  observer?: {
+    options?: {
+      attributes?: boolean;
+      characterData?: boolean;
+      childList?: boolean;
+      subtree?: boolean;
+      attributeOldValue?: boolean;
+      characterDataOldValue?: boolean;
+    };
+    callback: MutationCallback;
+  };
 }
 
 export interface EditorInterface {
+  // contenteditable ele
+  ele: Element | null;
   // 记录range对象方便execute时去处理
   range: Range | null;
+  // 记录节点变化
+  observer: MutationObserver | null;
   // 记录instance来方便操作state等
   instances: Map<string, unknown>;
   // 记录buttomView
@@ -31,10 +46,14 @@ export interface EditorInterface {
   instance: (name: string, instance: unknown) => boolean;
   // 获取实例
   getInstance: (name: string) => unknown;
+  // 获取编辑区的html
+  getData: () => string;
 }
 
 export class Editor implements EditorInterface {
+  ele: Element | null = null;
   range: Range | null = null;
+  observer: MutationObserver | null = null;
   instances = new Map<string, unknown>();
   buttonView: ButtonView[] = [];
   commands = new Map<String, (...args: any) => void>();
@@ -99,7 +118,22 @@ export class Editor implements EditorInterface {
     }
   }
 
+  setEle(ele: Element) {
+    this.ele = ele;
+  }
+
   setRange(range: Range | null) {
     this.range = range;
+  }
+
+  setObserver(observer: MutationObserver | null) {
+    this.observer = observer;
+  }
+
+  getData() {
+    if (this.ele !== null) {
+      return this.ele.innerHTML;
+    }
+    throw new Error('不存在该元素');
   }
 }

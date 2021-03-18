@@ -363,7 +363,9 @@ var Editor = /*#__PURE__*/ (function() {
   function Editor() {
     _classCallCheck(this, Editor);
 
+    this.ele = null;
     this.range = null;
+    this.observer = null;
     this.instances = new Map();
     this.buttonView = [];
     this.commands = new Map();
@@ -455,9 +457,31 @@ var Editor = /*#__PURE__*/ (function() {
       },
     },
     {
+      key: 'setEle',
+      value: function setEle(ele) {
+        this.ele = ele;
+      },
+    },
+    {
       key: 'setRange',
       value: function setRange(range) {
         this.range = range;
+      },
+    },
+    {
+      key: 'setObserver',
+      value: function setObserver(observer) {
+        this.observer = observer;
+      },
+    },
+    {
+      key: 'getData',
+      value: function getData() {
+        if (this.ele !== null) {
+          return this.ele.innerHTML;
+        }
+
+        throw new Error('不存在该元素');
       },
     },
   ]);
@@ -531,6 +555,7 @@ var RenderInBody = /*#__PURE__*/ (function(_Component) {
 var Container = function Container(_ref) {
   var id = _ref.id,
     onSelect = _ref.onSelect,
+    onChange = _ref.onChange,
     config = _ref.config,
     html = _ref.html,
     onInit = _ref.onInit;
@@ -550,10 +575,61 @@ var Container = function Container(_ref) {
   }, []);
   useEffect(
     function() {
-      if (document.getElementById(id) !== null) {
-        document.getElementById(id).onmousedown = function(e) {};
+      var ele = document.getElementById(id);
+      var observer; // 绑定observer 以及 ele
 
-        document.getElementById(id).onmouseup = function(e) {
+      if (ele !== null) {
+        var _config$observer$opti, _config$observer;
+
+        editor.setEle(ele);
+        observer = new MutationObserver(function(mutations, mutationObserver) {
+          config.observer &&
+            config.observer.callback(mutations, mutationObserver);
+          onChange && onChange(editor.getData());
+        });
+        observer.observe(
+          ele,
+          (_config$observer$opti =
+            config === null || config === void 0
+              ? void 0
+              : (_config$observer = config.observer) === null ||
+                _config$observer === void 0
+              ? void 0
+              : _config$observer.options) !== null &&
+            _config$observer$opti !== void 0
+            ? _config$observer$opti
+            : {
+                attributes: true,
+                characterData: true,
+                childList: true,
+                subtree: true,
+                attributeOldValue: true,
+                characterDataOldValue: true,
+              },
+        );
+        editor.setObserver(observer);
+      }
+
+      return function() {
+        if (observer) {
+          observer.disconnect();
+        }
+      };
+    },
+    [config, onChange],
+  );
+  useEffect(
+    function() {
+      var ele = document.getElementById(id);
+
+      if (ele !== null) {
+        // 实现类似onchange 无法监控到range变化
+        // (document.getElementById(id) as any).addEventListener('input', (e: Evt) => {
+        //   onChange && onChange(e, editor.getData())
+        // })
+        ele.onmousedown = function(e) {}; // 控制range以及buttonview
+
+        ele.onmouseup = function(e) {
           e.stopPropagation();
           var selection = document.getSelection();
           var dom = divRef.current;
@@ -609,7 +685,7 @@ var Container = function Container(_ref) {
       }
 
       return function() {
-        document.getElementById(id).onmouseup = function() {};
+        ele.onmouseup = function() {};
 
         document.onmouseup = function() {};
       };

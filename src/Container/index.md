@@ -4,7 +4,7 @@ Demo:
 
 ```tsx
 import React from 'react';
-import { Container, AbstractPlugin, ButtonView } from 'react-selection';
+import { Container, AbstractPlugin, ButtonView } from '@jason-design/selection';
 
 class Slot extends AbstractPlugin {
   init() {
@@ -42,6 +42,7 @@ export default () => {
       editor.register('handleVisible', () => {
         setCount(count + 1);
         setVisible(true);
+        console.log(editor.getData());
       });
       editor.register('handleBack', () => {
         let range = editor.range;
@@ -53,6 +54,7 @@ export default () => {
         newNode.append(con);
         newNode.addEventListener('click', () => {});
         range.insertNode(newNode);
+        document.getElementById('dddd').focus();
       });
     }
   }, [editor]);
@@ -67,43 +69,46 @@ export default () => {
                     举例：今日最高气温度。    
                     发送到发法法师发 
                 </p>​ "
-        onSelect={(e, selection) => {
-          if (selection && selection?.isCollapsed) {
-            console.log(111111);
-          } else {
-            const range: Range | undefined = selection?.getRangeAt(0);
-            if (!selection || !range) {
-              return;
-            }
-            const content = range?.toString().trim();
-            if (!content) {
-              return;
-            }
-            const {
-              commonAncestorContainer,
-              startContainer,
-              endContainer,
-            } = range;
-            if (
-              startContainer.nodeType === 3 &&
-              startContainer.parentNode?.nodeType === 1
-            ) {
-            }
-            // alert('2222;');
-            // document.execCommand('backColor', false, 'red')
-            // const newNode = document.createElement('variable');
-            // newNode.setAttribute('contenteditable', 'false');
-            // newNode.classList.add('huaci');
-            // newNode.style.backgroundColor = 'blue';
-            // let con = range.extractContents();
-            // newNode.append(con)
-            // newNode.addEventListener('click', () => {
-            //     setCount(count++)
-            //     console.log(count)
-            // })
-            // range.insertNode(newNode);
-          }
+        onChange={data => {
+          console.log(data);
         }}
+        // onSelect={(e, selection) => {
+        //   if (selection && selection?.isCollapsed) {
+        //     console.log(111111);
+        //   } else {
+        //     const range: Range | undefined = selection?.getRangeAt(0);
+        //     if (!selection || !range) {
+        //       return;
+        //     }
+        //     const content = range?.toString().trim();
+        //     if (!content) {
+        //       return;
+        //     }
+        //     const {
+        //       commonAncestorContainer,
+        //       startContainer,
+        //       endContainer,
+        //     } = range;
+        //     if (
+        //       startContainer.nodeType === 3 &&
+        //       startContainer.parentNode?.nodeType === 1
+        //     ) {
+        //     }
+        //     // alert('2222;');
+        //     // document.execCommand('backColor', false, 'red')
+        //     // const newNode = document.createElement('variable');
+        //     // newNode.setAttribute('contenteditable', 'false');
+        //     // newNode.classList.add('huaci');
+        //     // newNode.style.backgroundColor = 'blue';
+        //     // let con = range.extractContents();
+        //     // newNode.append(con)
+        //     // newNode.addEventListener('click', () => {
+        //     //     setCount(count++)
+        //     //     console.log(count)
+        //     // })
+        //     // range.insertNode(newNode);
+        //   }
+        // }}
         config={config}
         onInit={editor => {
           editor.hooks.init.tap('editor', () => {

@@ -13,6 +13,7 @@ interface ContainerProps {
   config: Config;
   html: any;
   onSelect?: (e: Evt, selection: Selections) => void;
+  onChange?: (data: string) => void;
   onInit: (editor: Editor) => void;
 }
 
@@ -28,6 +29,7 @@ interface ContainerProps {
 const Container: React.FC<ContainerProps> = ({
   id,
   onSelect,
+  onChange,
   config,
   html,
   onInit,
@@ -44,9 +46,47 @@ const Container: React.FC<ContainerProps> = ({
   }, []);
 
   useEffect(() => {
-    if (document.getElementById(id) !== null) {
-      (document.getElementById(id) as any).onmousedown = (e: Evt) => {};
-      (document.getElementById(id) as any).onmouseup = (e: Evt) => {
+    let ele = document.getElementById(id) as any;
+    let observer: MutationObserver;
+    // 绑定observer 以及 ele
+    if (ele !== null) {
+      editor.setEle(ele);
+      observer = new MutationObserver((mutations, mutationObserver) => {
+        config.observer &&
+          config.observer.callback(mutations, mutationObserver);
+        onChange && onChange(editor.getData());
+      });
+      observer.observe(
+        ele,
+        config?.observer?.options ?? {
+          attributes: true,
+          characterData: true,
+          childList: true,
+          subtree: true,
+          attributeOldValue: true,
+          characterDataOldValue: true,
+        },
+      );
+      editor.setObserver(observer);
+    }
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, [config, onChange]);
+
+  useEffect(() => {
+    let ele = document.getElementById(id) as any;
+
+    if (ele !== null) {
+      // 实现类似onchange 无法监控到range变化
+      // (document.getElementById(id) as any).addEventListener('input', (e: Evt) => {
+      //   onChange && onChange(e, editor.getData())
+      // })
+      ele.onmousedown = (e: Evt) => {};
+      // 控制range以及buttonview
+      ele.onmouseup = (e: Evt) => {
         e.stopPropagation();
         const selection: Selections = document.getSelection();
         const dom = divRef.current;
@@ -73,7 +113,7 @@ const Container: React.FC<ContainerProps> = ({
     }
 
     return () => {
-      (document.getElementById(id) as any).onmouseup = () => {};
+      ele.onmouseup = () => {};
       document.onmouseup = () => {};
     };
   }, [id, onInit, config]);

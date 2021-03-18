@@ -7,9 +7,22 @@ export declare class Plugin extends AbstractPlugin {
 }
 export interface Config {
   plugins: Array<typeof Plugin>;
+  observer?: {
+    options?: {
+      attributes?: boolean;
+      characterData?: boolean;
+      childList?: boolean;
+      subtree?: boolean;
+      attributeOldValue?: boolean;
+      characterDataOldValue?: boolean;
+    };
+    callback: MutationCallback;
+  };
 }
 export interface EditorInterface {
+  ele: Element | null;
   range: Range | null;
+  observer: MutationObserver | null;
   instances: Map<string, unknown>;
   buttonView: ButtonView[];
   commands: Map<String, () => void>;
@@ -17,9 +30,12 @@ export interface EditorInterface {
   register: (name: string, fn: (...args: any) => void) => boolean;
   instance: (name: string, instance: unknown) => boolean;
   getInstance: (name: string) => unknown;
+  getData: () => string;
 }
 export declare class Editor implements EditorInterface {
+  ele: Element | null;
   range: Range | null;
+  observer: MutationObserver | null;
   instances: Map<string, unknown>;
   buttonView: ButtonView[];
   commands: Map<String, (...args: any) => void>;
@@ -35,5 +51,8 @@ export declare class Editor implements EditorInterface {
   register(name: string, fn: (...args: any) => void): boolean;
   instance(name: string, instance: unknown): boolean;
   getInstance(name: string): unknown;
+  setEle(ele: Element): void;
   setRange(range: Range | null): void;
+  setObserver(observer: MutationObserver | null): void;
+  getData(): string;
 }
