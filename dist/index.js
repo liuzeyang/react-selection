@@ -586,6 +586,7 @@ var Container = function Container(_ref) {
   var id = _ref.id,
     onSelect = _ref.onSelect,
     onChange = _ref.onChange,
+    onClick = _ref.onClick,
     config = _ref.config,
     html = _ref.html,
     onInit = _ref.onInit;
@@ -661,6 +662,7 @@ var Container = function Container(_ref) {
 
         ele.onmouseup = function(e) {
           e.stopPropagation();
+          onClick && onClick(e);
           var selection = document.getSelection();
           var dom = divRef.current;
 

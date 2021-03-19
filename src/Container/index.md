@@ -63,12 +63,8 @@ export default () => {
     <>
       <Container
         id="dddd"
-        html="<p>
-                    fsafdsfsdfafsfafsfafdsf
-                    1. 数据变量：在生成文章时，系统会用数据源提供的实时数据，作为文章中该变量位置的内容。模板编辑时可以如下例，在要表达今日最高气温数据的位置插入『今日最高气温』这个数据变量。
-                    举例：今日最高气温度。    
-                    发送到发法法师发 
-                </p>​ "
+        html='大幅度<variable contenteditable="false" class="huaci" style="background-color: blue;">发发送到发</variable>打的发发生
+'
         onChange={data => {
           console.log(data);
         }}
@@ -110,6 +106,9 @@ export default () => {
         //   }
         // }}
         config={config}
+        onClick={e => {
+          console.log(e.target);
+        }}
         onInit={editor => {
           editor.hooks.init.tap('editor', () => {
             console.log('init;');
