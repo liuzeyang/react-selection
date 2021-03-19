@@ -5,7 +5,7 @@ import { AbstractPlugin } from './plugin';
 import { SeriesHook } from './tapable';
 
 export class Plugin extends AbstractPlugin {
-  init(): React.ReactNode {
+  init(): void {
     throw new Error('Method not implemented.');
   }
 }

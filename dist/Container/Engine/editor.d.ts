@@ -1,9 +1,8 @@
-import React from 'react';
 import { ButtonView } from './buttonView';
 import { AbstractPlugin } from './plugin';
 import { SeriesHook } from './tapable';
 export declare class Plugin extends AbstractPlugin {
-  init(): React.ReactNode;
+  init(): void;
 }
 export interface Config {
   plugins: Array<typeof Plugin>;

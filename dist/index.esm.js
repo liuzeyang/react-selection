@@ -5,7 +5,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { isFunction, isObject } from 'lodash';
+import { isFunction, isObject as isObject$1 } from 'lodash';
 import ReactDom from 'react-dom';
 
 function _classCallCheck(instance, Constructor) {
@@ -223,6 +223,30 @@ var css_248z$1 =
   ':root {\n  --ck-color-shadow-drop: rgba(0, 0, 0, 0.15);\n  --ck-color-shadow-drop-active: rgba(0, 0, 0, 0.2);\n}\n.jason-design-pop-plugin {\n  box-sizing: border-box;\n  display: none;\n  margin: 0;\n  padding: 10px 0 0 0;\n  font-size: 14px;\n  color: rgba(0, 0, 0, 0.85);\n  line-height: 1.5715;\n  position: absolute;\n  z-index: 1030;\n  font-weight: 400;\n  white-space: normal;\n  text-align: left;\n  cursor: pointer;\n}\n.jason-design-pop-plugin .jason-design-pop-content {\n  box-sizing: border-box;\n}\n.jason-design-pop-plugin .jason-design-pop-content .jason-design-pop-arrow {\n  left: 50%;\n  box-sizing: border-box;\n  transform: translateX(-50%) rotate(-135deg);\n  top: 6.2px;\n  border-color: #e5e5e5;\n  --ck-drop-shadow: 0 1px 2px 1px var(--ck-color-shadow-drop);\n  --ck-drop-shadow-active: 0 3px 6px 1px var(--ck-color-shadow-drop-active);\n  position: absolute;\n  display: block;\n  width: 8.48528137px;\n  height: 8.48528137px;\n  background: 0 0;\n  border-style: solid;\n  border-width: 4.24264069px;\n}\n.jason-design-pop-plugin .jason-design-pop-content .jason-design-pop-inner-content {\n  box-sizing: border-box;\n  box-shadow: 2px, 0 0;\n  min-height: 15px;\n  background: #e5e5e5;\n  color: rgba(0, 0, 0, 0.85);\n  border: 1px solid #e5e5e5;\n  padding: 5px;\n}\n';
 styleInject(css_248z$1);
 
+var isObject = function isObject(range) {
+  var _startContainer$paren, _endContainer$parentN;
+
+  var startContainer = range.startContainer,
+    endContainer = range.endContainer;
+
+  if (
+    startContainer.nodeType === 3 &&
+    ((_startContainer$paren = startContainer.parentNode) === null ||
+    _startContainer$paren === void 0
+      ? void 0
+      : _startContainer$paren.nodeType) === 1 &&
+    endContainer.nodeType === 3 &&
+    ((_endContainer$parentN = endContainer.parentNode) === null ||
+    _endContainer$parentN === void 0
+      ? void 0
+      : _endContainer$parentN.nodeType) === 1
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 var PopPlugin = function PopPlugin(_ref) {
   var propsRef = _ref.propsRef,
     currentRange = _ref.currentRange,
@@ -259,6 +283,7 @@ var PopPlugin = function PopPlugin(_ref) {
                 ? void 0
                 : _button$Tconfig$label.toString(),
             onMouseDown: function onMouseDown(e) {
+              isObject(currentRange.current);
               e.preventDefault();
               button.EffectFn(e, currentRange.current);
             },
@@ -434,7 +459,7 @@ var Editor = /*#__PURE__*/ (function() {
     {
       key: 'instance',
       value: function instance(name, _instance) {
-        if (isObject(_instance)) {
+        if (isObject$1(_instance)) {
           if (this.instances.has(name)) {
             throw new Error('已经存在该实例');
           }

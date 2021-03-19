@@ -2,6 +2,7 @@ import './pop.less';
 import React, { forwardRef } from 'react';
 import { Editor } from '../Engine/editor';
 import { ButtonView } from '../Engine/buttonView';
+import { isObject } from '../Engine/utils';
 
 export interface PopProps {
   editor: Editor;
@@ -20,6 +21,7 @@ const PopPlugin: React.FC<PopProps> = ({ propsRef, currentRange, editor }) => {
               className="jason-design-pop-inner-content"
               key={button?.Tconfig?.label?.toString()}
               onMouseDown={e => {
+                isObject(currentRange.current);
                 e.preventDefault();
                 button.EffectFn(e, currentRange.current);
               }}

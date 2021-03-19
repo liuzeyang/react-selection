@@ -84,16 +84,16 @@ export default () => {
         //     if (!content) {
         //       return;
         //     }
-        //     const {
-        //       commonAncestorContainer,
-        //       startContainer,
-        //       endContainer,
-        //     } = range;
-        //     if (
-        //       startContainer.nodeType === 3 &&
-        //       startContainer.parentNode?.nodeType === 1
-        //     ) {
-        //     }
+        // const {
+        //   commonAncestorContainer,
+        //   startContainer,
+        //   endContainer,
+        // } = range;
+        // if (
+        //   startContainer.nodeType === 3 &&
+        //   startContainer.parentNode?.nodeType === 1
+        // ) {
+        // }
         //     // alert('2222;');
         //     // document.execCommand('backColor', false, 'red')
         //     // const newNode = document.createElement('variable');
