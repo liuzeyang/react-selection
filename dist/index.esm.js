@@ -569,19 +569,20 @@ var RenderInBody = /*#__PURE__*/ (function(_Component) {
 })(Component);
 
 /**
- *
  * @param id
- * @param value
+ * @param config
+ * @param html
  * @param onSelect
+ * @param onChange
+ * @param onClick
  * @param onInit
- * @param configs
  */
 
 var Container = function Container(_ref) {
   var id = _ref.id,
     onSelect = _ref.onSelect,
     onChange = _ref.onChange,
-    onClick = _ref.onClick,
+    onContainerClick = _ref.onContainerClick,
     config = _ref.config,
     html = _ref.html,
     onInit = _ref.onInit;
@@ -663,7 +664,7 @@ var Container = function Container(_ref) {
 
         ele.onmouseup = function(e) {
           e.stopPropagation();
-          onClick && onClick(e);
+          onContainerClick && onContainerClick(e);
           var selection = document.getSelection();
           var dom = divRef.current;
 

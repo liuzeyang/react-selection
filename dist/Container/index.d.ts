@@ -11,16 +11,17 @@ interface ContainerProps {
   html: any;
   onSelect?: (e: Evt, selection: Selections) => void;
   onChange?: (data: string) => void;
-  onClick?: (e: Evt) => void;
+  onContainerClick?: (e: Evt) => void;
   onInit?: (editor: Editor) => void;
 }
 /**
- *
  * @param id
- * @param value
+ * @param config
+ * @param html
  * @param onSelect
+ * @param onChange
+ * @param onClick
  * @param onInit
- * @param configs
  */
 declare const Container: React.FC<ContainerProps>;
 export default Container;

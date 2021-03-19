@@ -14,24 +14,25 @@ interface ContainerProps {
   html: any;
   onSelect?: (e: Evt, selection: Selections) => void;
   onChange?: (data: string) => void;
-  onClick?: (e: Evt) => void;
+  onContainerClick?: (e: Evt) => void;
   onInit?: (editor: Editor) => void;
 }
 
 /**
- *
  * @param id
- * @param value
+ * @param config
+ * @param html
  * @param onSelect
+ * @param onChange
+ * @param onClick
  * @param onInit
- * @param configs
  */
 
 const Container: React.FC<ContainerProps> = ({
   id,
   onSelect,
   onChange,
-  onClick,
+  onContainerClick,
   config,
   html,
   onInit,
@@ -94,7 +95,7 @@ const Container: React.FC<ContainerProps> = ({
       // 控制range以及buttonview
       ele.onmouseup = (e: Evt) => {
         e.stopPropagation();
-        onClick && onClick(e);
+        onContainerClick && onContainerClick(e);
         const selection: Selections = document.getSelection();
         const dom = divRef.current;
         if (selection?.isCollapsed) {
