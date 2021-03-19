@@ -288,7 +288,15 @@ var PopPlugin = function PopPlugin(_ref) {
                 ? void 0
                 : _button$Tconfig$label.toString(),
             onMouseDown: function onMouseDown(e) {
+              var _propsRef$current;
+
               isObject(currentRange.current);
+              propsRef === null || propsRef === void 0
+                ? void 0
+                : (_propsRef$current = propsRef.current) === null ||
+                  _propsRef$current === void 0
+                ? void 0
+                : _propsRef$current.setAttribute('style', 'display: none');
               e.preventDefault();
               button.EffectFn(e, currentRange.current);
             },
@@ -617,7 +625,7 @@ var Container = function Container(_ref) {
         observer = new MutationObserver(function(mutations, mutationObserver) {
           config.observer &&
             config.observer.callback(mutations, mutationObserver);
-          onChange && onChange(editor.getData());
+          onChange && onChange(editor.getData(), editor);
         });
         observer.observe(
           ele,
@@ -669,7 +677,7 @@ var Container = function Container(_ref) {
 
         ele.onmouseup = function(e) {
           e.stopPropagation();
-          onContainerClick && onContainerClick(e);
+          onContainerClick && onContainerClick(e, editor);
           var selection = document.getSelection();
           var dom = divRef.current;
 

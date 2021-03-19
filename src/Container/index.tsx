@@ -13,8 +13,8 @@ interface ContainerProps {
   config: Config;
   html: any;
   onSelect?: (e: Evt, selection: Selections) => void;
-  onChange?: (data: string) => void;
-  onContainerClick?: (e: Evt) => void;
+  onChange?: (data: string, editor: Editor) => void;
+  onContainerClick?: (e: Evt, editor: Editor) => void;
   onInit?: (editor: Editor) => void;
 }
 
@@ -57,7 +57,7 @@ const Container: React.FC<ContainerProps> = ({
       observer = new MutationObserver((mutations, mutationObserver) => {
         config.observer &&
           config.observer.callback(mutations, mutationObserver);
-        onChange && onChange(editor.getData());
+        onChange && onChange(editor.getData(), editor);
       });
       observer.observe(
         ele,
@@ -95,7 +95,7 @@ const Container: React.FC<ContainerProps> = ({
       // 控制range以及buttonview
       ele.onmouseup = (e: Evt) => {
         e.stopPropagation();
-        onContainerClick && onContainerClick(e);
+        onContainerClick && onContainerClick(e, editor);
         const selection: Selections = document.getSelection();
         const dom = divRef.current;
         if (selection?.isCollapsed) {

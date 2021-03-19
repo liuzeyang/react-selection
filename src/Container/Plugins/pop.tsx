@@ -22,6 +22,10 @@ const PopPlugin: React.FC<PopProps> = ({ propsRef, currentRange, editor }) => {
               key={button?.Tconfig?.label?.toString()}
               onMouseDown={e => {
                 isObject(currentRange.current);
+                (propsRef as any)?.current?.setAttribute(
+                  'style',
+                  'display: none',
+                );
                 e.preventDefault();
                 button.EffectFn(e, currentRange.current);
               }}

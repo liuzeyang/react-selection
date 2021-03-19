@@ -10,8 +10,8 @@ interface ContainerProps {
   config: Config;
   html: any;
   onSelect?: (e: Evt, selection: Selections) => void;
-  onChange?: (data: string) => void;
-  onContainerClick?: (e: Evt) => void;
+  onChange?: (data: string, editor: Editor) => void;
+  onContainerClick?: (e: Evt, editor: Editor) => void;
   onInit?: (editor: Editor) => void;
 }
 /**
