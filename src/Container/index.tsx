@@ -71,6 +71,10 @@ const Container: React.FC<ContainerProps> = ({
       );
       editor.setObserver(observer);
     }
+    editor.hooks.execute.tap('editor', () => {
+      const dom = divRef.current;
+      dom?.setAttribute('style', 'display: none');
+    });
     return () => {
       if (observer) {
         observer.disconnect();

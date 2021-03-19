@@ -636,6 +636,12 @@ var Container = function Container(_ref) {
         editor.setObserver(observer);
       }
 
+      editor.hooks.execute.tap('editor', function() {
+        var dom = divRef.current;
+        dom === null || dom === void 0
+          ? void 0
+          : dom.setAttribute('style', 'display: none');
+      });
       return function() {
         if (observer) {
           observer.disconnect();
