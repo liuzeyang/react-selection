@@ -61,7 +61,7 @@ export default () => {
     <>
       <Container
         id="dddd"
-        html='大幅度<variable contenteditable="false" class="huaci" style="background-color: blue;">发发送到发</variable>打的发发生
+        html='<p>大幅度<variable contenteditable="false" class="huaci" style="background-color: blue;">发发送到发</variable>打的发发生</p>
 '
         onChange={data => {
           console.log('change', data);

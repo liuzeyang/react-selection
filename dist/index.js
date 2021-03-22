@@ -665,11 +665,24 @@ var Container = function Container(_ref) {
       var ele = document.getElementById(id);
 
       if (ele !== null) {
+        // 处理 删除元素问题保留一个p
+        var onkeydownInEditable = function onkeydownInEditable(e) {
+          if (
+            e.key === 'Backspace' ||
+            e.key === 'Delete' ||
+            e.key === 'Paste'
+          ) {
+            if ('<p><br></p>' === editor.getData().trim()) e.preventDefault();
+          }
+        };
+
         // 实现类似onchange 无法监控到range变化
         // (document.getElementById(id) as any).addEventListener('input', (e: Evt) => {
         //   onChange && onChange(e, editor.getData())
         // })
-        ele.onmousedown = function(e) {}; // 控制range以及buttonview
+        ele.onmousedown = function(e) {};
+
+        ele.addEventListener('keydown', onkeydownInEditable); // 控制range以及buttonview
 
         ele.onmouseup = function(e) {
           e.stopPropagation();

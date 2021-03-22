@@ -88,6 +88,14 @@ const Container: React.FC<ContainerProps> = ({
       //   onChange && onChange(e, editor.getData())
       // })
       ele.onmousedown = (e: Evt) => {};
+      // 处理 删除元素问题保留一个p
+      function onkeydownInEditable(e: KeyboardEvent) {
+        if (e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Paste') {
+          if ('<p><br></p>' === editor.getData().trim()) e.preventDefault();
+        }
+      }
+
+      ele.addEventListener('keydown', onkeydownInEditable);
       // 控制range以及buttonview
       ele.onmouseup = (e: Evt) => {
         e.stopPropagation();
