@@ -582,7 +582,7 @@ var RenderInBody = /*#__PURE__*/ (function(_Component) {
  * @param html
  * @param onSelect
  * @param onChange
- * @param onClick
+ * @param onContainerClick
  * @param onInit
  */
 
@@ -613,11 +613,12 @@ var Container = function Container(_ref) {
       var ele = document.getElementById(id);
       var observer; // 绑定observer 以及 ele
 
-      if (ele !== null) {
+      if (ele !== null && editor.observer === null) {
         var _config$observer$opti, _config$observer;
 
         editor.setEle(ele);
         observer = new MutationObserver(function(mutations, mutationObserver) {
+          console.log(mutations);
           config.observer &&
             config.observer.callback(mutations, mutationObserver);
           onChange && onChange(editor.getData(), editor);
@@ -651,11 +652,6 @@ var Container = function Container(_ref) {
           ? void 0
           : dom.setAttribute('style', 'display: none');
       });
-      return function() {
-        if (observer) {
-          observer.disconnect();
-        }
-      };
     },
     [config, onChange],
   );

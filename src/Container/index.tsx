@@ -24,7 +24,7 @@ interface ContainerProps {
  * @param html
  * @param onSelect
  * @param onChange
- * @param onClick
+ * @param onContainerClick
  * @param onInit
  */
 
@@ -52,9 +52,10 @@ const Container: React.FC<ContainerProps> = ({
     let ele = document.getElementById(id) as any;
     let observer: MutationObserver;
     // 绑定observer 以及 ele
-    if (ele !== null) {
+    if (ele !== null && editor.observer === null) {
       editor.setEle(ele);
       observer = new MutationObserver((mutations, mutationObserver) => {
+        console.log(mutations);
         config.observer &&
           config.observer.callback(mutations, mutationObserver);
         onChange && onChange(editor.getData(), editor);
@@ -76,11 +77,6 @@ const Container: React.FC<ContainerProps> = ({
       const dom = divRef.current;
       dom?.setAttribute('style', 'display: none');
     });
-    return () => {
-      if (observer) {
-        observer.disconnect();
-      }
-    };
   }, [config, onChange]);
 
   useEffect(() => {

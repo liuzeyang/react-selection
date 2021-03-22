@@ -20,7 +20,7 @@ interface ContainerProps {
  * @param html
  * @param onSelect
  * @param onChange
- * @param onClick
+ * @param onContainerClick
  * @param onInit
  */
 declare const Container: React.FC<ContainerProps>;

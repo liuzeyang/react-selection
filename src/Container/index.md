@@ -42,7 +42,6 @@ export default () => {
       editor.register('handleVisible', () => {
         setCount(count + 1);
         setVisible(true);
-        console.log(editor.getData());
       });
       editor.register('handleBack', () => {
         let range = editor.range;
@@ -54,7 +53,6 @@ export default () => {
         newNode.append(con);
         newNode.addEventListener('click', () => {});
         range.insertNode(newNode);
-        document.getElementById('dddd').focus();
       });
     }
   }, [editor]);
@@ -66,7 +64,7 @@ export default () => {
         html='大幅度<variable contenteditable="false" class="huaci" style="background-color: blue;">发发送到发</variable>打的发发生
 '
         onChange={data => {
-          console.log(data);
+          console.log('change', data);
         }}
         // onSelect={(e, selection) => {
         //   if (selection && selection?.isCollapsed) {
@@ -106,9 +104,7 @@ export default () => {
         //   }
         // }}
         config={config}
-        onClick={e => {
-          console.log(e.target);
-        }}
+        onClick={e => {}}
         onInit={editor => {
           editor.hooks.init.tap('editor', () => {
             console.log('init;');
