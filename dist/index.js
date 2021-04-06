@@ -699,36 +699,36 @@ var Container = function Container(_ref) {
               ? void 0
               : dom.setAttribute('style', 'display: none');
           } else {
-            var _dom$innerText$length;
-
             var range =
               selection === null || selection === void 0
                 ? void 0
                 : selection.getRangeAt(0);
-            rangeRef.current = range;
-            editor.setRange(range !== null && range !== void 0 ? range : null);
-            dom === null || dom === void 0
-              ? void 0
-              : dom.setAttribute(
-                  'style',
-                  'display: block;top: '
-                    .concat(e.clientY, 'px;left:')
-                    .concat(
-                      e.clientX -
-                        (((_dom$innerText$length =
-                          dom === null || dom === void 0
+            var rect = range && range.getBoundingClientRect();
+
+            if (rect) {
+              rangeRef.current = range;
+              editor.setRange(
+                range !== null && range !== void 0 ? range : null,
+              );
+              dom === null || dom === void 0
+                ? void 0
+                : dom.setAttribute(
+                    'style',
+                    'display: block;top: '
+                      .concat(
+                        (rect === null || rect === void 0 ? void 0 : rect.top) +
+                          (rect === null || rect === void 0
                             ? void 0
-                            : dom.innerText.length) !== null &&
-                        _dom$innerText$length !== void 0
-                          ? _dom$innerText$length
-                          : 0) *
-                          14 +
-                          12) /
-                          2,
-                      'px',
-                    ),
-                );
-            onSelect && onSelect(e, selection); // selection && selection.removeAllRanges(); // 这个remove还是很重要的
+                            : rect.height),
+                        'px;left:',
+                      )
+                      .concat(
+                        rect === null || rect === void 0 ? void 0 : rect.left,
+                        'px',
+                      ),
+                  );
+              onSelect && onSelect(e, selection);
+            } // selection && selection.removeAllRanges(); // 这个remove还是很重要的
           }
         };
 

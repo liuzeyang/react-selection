@@ -106,15 +106,18 @@ const Container: React.FC<ContainerProps> = ({
           dom?.setAttribute('style', 'display: none');
         } else {
           let range = selection?.getRangeAt(0);
-          rangeRef.current = range;
-          editor.setRange(range ?? null);
-          dom?.setAttribute(
-            'style',
-            `display: block;top: ${(e as any).clientY}px;left:${(e as any)
-              .clientX -
-              ((dom?.innerText.length ?? 0) * 14 + 12) / 2}px`,
-          );
-          onSelect && onSelect(e, selection);
+          let rect = range && range.getBoundingClientRect();
+          if (rect) {
+            rangeRef.current = range;
+            editor.setRange(range ?? null);
+            dom?.setAttribute(
+              'style',
+              `display: block;top: ${rect?.top + rect?.height}px;left:${
+                rect?.left
+              }px`,
+            );
+            onSelect && onSelect(e, selection);
+          }
           // selection && selection.removeAllRanges(); // 这个remove还是很重要的
         }
       };

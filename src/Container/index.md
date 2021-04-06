@@ -15,6 +15,7 @@ class Slot extends AbstractPlugin {
 
     this.listenTo(button, (e, range) => {
       console.log(this, e, range);
+      console.log(range.getBoundingClientRect());
       this.editor.execute('handleVisible');
       //  const newNode = document.createElement('variable');
       // newNode.setAttribute('contenteditable', 'false');
