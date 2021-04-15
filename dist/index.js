@@ -693,9 +693,10 @@ var Container = function Container(_ref) {
             (selection === null || selection === void 0
               ? void 0
               : selection.isCollapsed) ||
-            (selection === null || selection === void 0
-              ? void 0
-              : selection.type) !== 'Range'
+            rangeRef.current ===
+              (selection === null || selection === void 0
+                ? void 0
+                : selection.getRangeAt(0))
           ) {
             dom === null || dom === void 0
               ? void 0

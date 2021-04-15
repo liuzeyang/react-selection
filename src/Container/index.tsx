@@ -101,8 +101,10 @@ const Container: React.FC<ContainerProps> = ({
         e.stopPropagation();
         const selection: Selections = document.getSelection();
         const dom = divRef.current;
-
-        if (selection?.isCollapsed || selection?.type !== 'Range') {
+        if (
+          selection?.isCollapsed ||
+          rangeRef.current === selection?.getRangeAt(0)
+        ) {
           dom?.setAttribute('style', 'display: none');
           rangeRef.current = null;
         } else {
