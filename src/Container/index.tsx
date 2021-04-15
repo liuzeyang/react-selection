@@ -99,11 +99,12 @@ const Container: React.FC<ContainerProps> = ({
       // 控制range以及buttonview
       ele.onmouseup = (e: Evt) => {
         e.stopPropagation();
-        onContainerClick && onContainerClick(e, editor);
         const selection: Selections = document.getSelection();
         const dom = divRef.current;
-        if (selection?.isCollapsed) {
+
+        if (selection?.isCollapsed || selection?.type !== 'Range') {
           dom?.setAttribute('style', 'display: none');
+          rangeRef.current = null;
         } else {
           let range = selection?.getRangeAt(0);
           let rect = range && range.getBoundingClientRect();
@@ -112,12 +113,12 @@ const Container: React.FC<ContainerProps> = ({
             editor.setRange(range ?? null);
             dom?.setAttribute(
               'style',
-              `display: block;top: ${rect?.top + rect?.height}px;left:${
-                rect?.left
-              }px`,
+              `display: block;top: ${rect?.top +
+                rect?.height}px;left:${rect?.left - dom.offsetWidth / 2}px`,
             );
             onSelect && onSelect(e, selection);
           }
+          onContainerClick && onContainerClick(e, editor);
           // selection && selection.removeAllRanges(); // 这个remove还是很重要的
         }
       };
