@@ -105,7 +105,7 @@ const Container: React.FC<ContainerProps> = ({
           selection?.isCollapsed ||
           rangeRef.current === selection?.getRangeAt(0)
         ) {
-          dom?.setAttribute('style', 'display: none');
+          dom?.setAttribute('style', 'visibility:hidden;');
           rangeRef.current = null;
         } else {
           let range = selection?.getRangeAt(0);
@@ -115,7 +115,7 @@ const Container: React.FC<ContainerProps> = ({
             editor.setRange(range ?? null);
             dom?.setAttribute(
               'style',
-              `display: block;top: ${rect?.top +
+              `visibility:visible;top: ${rect?.top +
                 rect?.height}px;left:${rect?.left - dom.offsetWidth / 2}px`,
             );
             onSelect && onSelect(e, selection);
@@ -126,7 +126,7 @@ const Container: React.FC<ContainerProps> = ({
       };
       document.onmouseup = () => {
         const dom = divRef.current;
-        dom?.setAttribute('style', 'display: none');
+        dom?.setAttribute('style', 'visibility:hidden;');
       };
     }
 

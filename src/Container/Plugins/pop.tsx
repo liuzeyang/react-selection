@@ -24,7 +24,7 @@ const PopPlugin: React.FC<PopProps> = ({ propsRef, currentRange, editor }) => {
                 isObject(currentRange.current);
                 (propsRef as any)?.current?.setAttribute(
                   'style',
-                  'display: none',
+                  'visibility:hidden;',
                 );
                 e.preventDefault();
                 button.EffectFn(e, currentRange.current);
