@@ -105,7 +105,9 @@ export default () => {
         //   }
         // }}
         config={config}
-        onClick={e => {}}
+        onContainerClick={e => {
+          console.log(222);
+        }}
         onInit={editor => {
           editor.hooks.init.tap('editor', () => {
             console.log('init;');

@@ -101,10 +101,7 @@ const Container: React.FC<ContainerProps> = ({
         e.stopPropagation();
         const selection: Selections = document.getSelection();
         const dom = divRef.current;
-        if (
-          selection?.isCollapsed ||
-          rangeRef.current === selection?.getRangeAt(0)
-        ) {
+        if (selection?.isCollapsed) {
           dom?.setAttribute('style', 'visibility:hidden;');
           rangeRef.current = null;
         } else {
@@ -120,9 +117,9 @@ const Container: React.FC<ContainerProps> = ({
             );
             onSelect && onSelect(e, selection);
           }
-          onContainerClick && onContainerClick(e, editor);
           // selection && selection.removeAllRanges(); // 这个remove还是很重要的
         }
+        onContainerClick && onContainerClick(e, editor);
       };
       document.onmouseup = () => {
         const dom = divRef.current;

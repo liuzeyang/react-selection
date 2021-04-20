@@ -690,13 +690,9 @@ var Container = function Container(_ref) {
           var dom = divRef.current;
 
           if (
-            (selection === null || selection === void 0
+            selection === null || selection === void 0
               ? void 0
-              : selection.isCollapsed) ||
-            rangeRef.current ===
-              (selection === null || selection === void 0
-                ? void 0
-                : selection.getRangeAt(0))
+              : selection.isCollapsed
           ) {
             dom === null || dom === void 0
               ? void 0
@@ -735,10 +731,10 @@ var Container = function Container(_ref) {
                       ),
                   );
               onSelect && onSelect(e, selection);
-            }
-
-            onContainerClick && onContainerClick(e, editor); // selection && selection.removeAllRanges(); // 这个remove还是很重要的
+            } // selection && selection.removeAllRanges(); // 这个remove还是很重要的
           }
+
+          onContainerClick && onContainerClick(e, editor);
         };
 
         document.onmouseup = function() {
