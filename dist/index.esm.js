@@ -675,7 +675,14 @@ var Container = function Container(_ref) {
         // (document.getElementById(id) as any).addEventListener('input', (e: Evt) => {
         //   onChange && onChange(e, editor.getData())
         // })
-        ele.onmousedown = function(e) {};
+        ele.onmousedown = function(e) {
+          var _window$getSelection;
+
+          (_window$getSelection = window.getSelection()) === null ||
+          _window$getSelection === void 0
+            ? void 0
+            : _window$getSelection.removeAllRanges();
+        };
 
         ele.addEventListener('keydown', onkeydownInEditable); // 控制range以及buttonview
 

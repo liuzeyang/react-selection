@@ -87,7 +87,9 @@ const Container: React.FC<ContainerProps> = ({
       // (document.getElementById(id) as any).addEventListener('input', (e: Evt) => {
       //   onChange && onChange(e, editor.getData())
       // })
-      ele.onmousedown = (e: Evt) => {};
+      ele.onmousedown = (e: Evt) => {
+        window.getSelection()?.removeAllRanges();
+      };
       // 处理 删除元素问题保留一个p
       function onkeydownInEditable(e: KeyboardEvent) {
         if (e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Paste') {
