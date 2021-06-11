@@ -9,6 +9,7 @@ export interface TConfig {
 export declare class ButtonView {
   Tconfig: TConfig | undefined;
   EffectFn: EffectFn;
+  visible?: boolean;
   constructor();
   set(config: TConfig): void;
   effect(effectFn: EffectFn): void;

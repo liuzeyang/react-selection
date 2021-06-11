@@ -11,6 +11,7 @@ export interface TConfig {
 export class ButtonView {
   Tconfig: TConfig | undefined;
   EffectFn!: EffectFn;
+  visible?: boolean = true;
   constructor() {}
 
   set(config: TConfig) {

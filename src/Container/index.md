@@ -12,7 +12,7 @@ class Slot extends AbstractPlugin {
     button.set({
       label: '添加分支',
     });
-
+    // button.visible = true;
     this.listenTo(button, (e, range) => {
       console.log(this, e, range);
       console.log(range.getBoundingClientRect());

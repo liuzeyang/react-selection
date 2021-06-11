@@ -273,6 +273,10 @@ var PopPlugin = function PopPlugin(_ref) {
       editor.buttonView.map(function(button) {
         var _button$Tconfig, _button$Tconfig$label, _button$Tconfig2;
 
+        if (button.visible === false) {
+          return null;
+        }
+
         return /*#__PURE__*/ React__default['default'].createElement(
           'div',
           {
@@ -581,6 +585,14 @@ var RenderInBody = /*#__PURE__*/ (function(_Component) {
   return RenderInBody;
 })(React.Component);
 
+var checkVisiblePlugin = function checkVisiblePlugin(editor) {
+  return (
+    editor.buttonView.filter(function(button) {
+      return button.visible;
+    }).length !== 0
+  );
+};
+
 /**
  * @param id
  * @param config
@@ -664,7 +676,7 @@ var Container = function Container(_ref) {
     function() {
       var ele = document.getElementById(id);
 
-      if (ele !== null) {
+      if (ele !== null && checkVisiblePlugin(editor)) {
         // 处理 删除元素问题保留一个p
         var onkeydownInEditable = function onkeydownInEditable(e) {
           if (
@@ -789,6 +801,8 @@ var Container = function Container(_ref) {
 var ButtonView = /*#__PURE__*/ (function() {
   function ButtonView() {
     _classCallCheck(this, ButtonView);
+
+    this.visible = true;
   }
 
   _createClass(ButtonView, [

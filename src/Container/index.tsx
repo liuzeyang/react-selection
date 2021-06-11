@@ -3,6 +3,7 @@ import './index.less';
 import { PopPluginRef } from './Plugins/pop';
 import { Config, Editor } from './Engine/editor';
 import { RenderInBody } from './Plugins/renderInBody';
+import { checkVisiblePlugin } from './utils';
 
 type Selections = Selection | null;
 export type Evt =
@@ -82,7 +83,7 @@ const Container: React.FC<ContainerProps> = ({
   useEffect(() => {
     let ele = document.getElementById(id) as any;
 
-    if (ele !== null) {
+    if (ele !== null && checkVisiblePlugin(editor)) {
       // 实现类似onchange 无法监控到range变化
       // (document.getElementById(id) as any).addEventListener('input', (e: Evt) => {
       //   onChange && onChange(e, editor.getData())

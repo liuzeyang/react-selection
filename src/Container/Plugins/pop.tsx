@@ -16,6 +16,9 @@ const PopPlugin: React.FC<PopProps> = ({ propsRef, currentRange, editor }) => {
       <div className="jason-design-pop-content">
         <div className="jason-design-pop-arrow"></div>
         {editor.buttonView.map((button: ButtonView) => {
+          if (button.visible === false) {
+            return null;
+          }
           return (
             <div
               className="jason-design-pop-inner-content"
