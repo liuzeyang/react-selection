@@ -41,7 +41,7 @@ const Container: React.FC<ContainerProps> = ({
   // 控制pop
   const divRef = React.createRef<HTMLDivElement>();
   const rangeRef = useRef<any>(null);
-  const [editor, setEditor] = useState<Editor>(new Editor());
+  const [editor] = useState<Editor>(new Editor());
 
   useEffect(() => {
     document.execCommand('defaultParagraphSeparator', false, 'p');
@@ -56,7 +56,6 @@ const Container: React.FC<ContainerProps> = ({
     if (ele !== null && editor.observer === null) {
       editor.setEle(ele);
       observer = new MutationObserver((mutations, mutationObserver) => {
-        console.log(mutations);
         config.observer &&
           config.observer.callback(mutations, mutationObserver);
         onChange && onChange(editor.getData(), editor);

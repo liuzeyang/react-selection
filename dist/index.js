@@ -616,9 +616,8 @@ var Container = function Container(_ref) {
   var rangeRef = React.useRef(null);
 
   var _useState = React.useState(new Editor()),
-    _useState2 = _slicedToArray(_useState, 2),
-    editor = _useState2[0],
-    setEditor = _useState2[1];
+    _useState2 = _slicedToArray(_useState, 1),
+    editor = _useState2[0];
 
   React.useEffect(function() {
     document.execCommand('defaultParagraphSeparator', false, 'p');
@@ -635,7 +634,6 @@ var Container = function Container(_ref) {
 
         editor.setEle(ele);
         observer = new MutationObserver(function(mutations, mutationObserver) {
-          console.log(mutations);
           config.observer &&
             config.observer.callback(mutations, mutationObserver);
           onChange && onChange(editor.getData(), editor);

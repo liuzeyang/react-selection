@@ -57,7 +57,6 @@ export default () => {
       });
     }
   }, [editor]);
-  console.log(count);
   return (
     <>
       <Container
@@ -67,43 +66,6 @@ export default () => {
         onChange={data => {
           console.log('change', data);
         }}
-        // onSelect={(e, selection) => {
-        //   if (selection && selection?.isCollapsed) {
-        //     console.log(111111);
-        //   } else {
-        //     const range: Range | undefined = selection?.getRangeAt(0);
-        //     if (!selection || !range) {
-        //       return;
-        //     }
-        //     const content = range?.toString().trim();
-        //     if (!content) {
-        //       return;
-        //     }
-        // const {
-        //   commonAncestorContainer,
-        //   startContainer,
-        //   endContainer,
-        // } = range;
-        // if (
-        //   startContainer.nodeType === 3 &&
-        //   startContainer.parentNode?.nodeType === 1
-        // ) {
-        // }
-        //     // alert('2222;');
-        //     // document.execCommand('backColor', false, 'red')
-        //     // const newNode = document.createElement('variable');
-        //     // newNode.setAttribute('contenteditable', 'false');
-        //     // newNode.classList.add('huaci');
-        //     // newNode.style.backgroundColor = 'blue';
-        //     // let con = range.extractContents();
-        //     // newNode.append(con)
-        //     // newNode.addEventListener('click', () => {
-        //     //     setCount(count++)
-        //     //     console.log(count)
-        //     // })
-        //     // range.insertNode(newNode);
-        //   }
-        // }}
         config={config}
         onContainerClick={e => {
           console.log(222);
