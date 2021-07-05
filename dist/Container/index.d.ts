@@ -2,16 +2,19 @@ import React from 'react';
 import './index.less';
 import { Config, Editor } from './Engine/editor';
 declare type Selections = Selection | null;
-export declare type Evt =
-  | React.MouseEvent<HTMLDivElement>
-  | React.KeyboardEvent<HTMLDivElement>;
 interface ContainerProps {
   id: string;
   config: Config;
   html: any;
-  onSelect?: (e: Evt, selection: Selections) => void;
+  onSelect?: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    selection: Selections,
+  ) => void;
   onChange?: (data: string, editor: Editor) => void;
-  onContainerClick?: (e: Evt, editor: Editor) => void;
+  onContainerClick?: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    editor: Editor,
+  ) => void;
   onInit?: (editor: Editor) => void;
 }
 /**

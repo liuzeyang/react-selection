@@ -1,6 +1,5 @@
 /// <reference types="react" />
-import { Evt } from '..';
-export declare type EffectFn = (e: Evt, range: Range) => void;
+export declare type EffectFn = (e: any, range: Range) => void;
 export interface TConfig {
   label: string | React.ReactNode;
   style?: CSSStyleDeclaration;

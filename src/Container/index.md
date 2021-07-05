@@ -12,21 +12,16 @@ class Slot extends AbstractPlugin {
     button.set({
       label: '添加分支',
     });
-    // button.visible = true;
-    this.listenTo(button, (e, range) => {
-      console.log(this, e, range);
-      console.log(range.getBoundingClientRect());
-      this.editor.execute('handleVisible');
-      //  const newNode = document.createElement('variable');
-      // newNode.setAttribute('contenteditable', 'false');
-      // newNode.classList.add('huaci');
-      // newNode.style.backgroundColor = 'blue';
-      // let con = range.extractContents();
-      // newNode.append(con)
-      // newNode.addEventListener('click', () => {
-      // })
-      // range.insertNode(newNode);
-      // document.getSelection().removeAllRanges();
+    this.listenTo(button, e => {
+      let range = this.editor.range;
+      const newNode = document.createElement('variable');
+      newNode.setAttribute('contenteditable', 'false');
+      newNode.classList.add('huaci');
+      newNode.style.backgroundColor = 'blue';
+      let con = range.extractContents();
+      newNode.append(con);
+      range.insertNode(newNode);
+      window.getSelection()?.removeAllRanges();
     });
   }
 }
@@ -71,12 +66,6 @@ export default () => {
           console.log(222);
         }}
         onInit={editor => {
-          editor.hooks.init.tap('editor', () => {
-            console.log('init;');
-          });
-          editor.hooks.execute.tap('editor', () => {
-            console.log('execute;');
-          });
           setEditor(editor);
         }}
       />

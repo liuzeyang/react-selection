@@ -661,111 +661,121 @@ var Container = function Container(_ref) {
         editor.setObserver(observer);
       }
 
-      editor.hooks.execute.tap('editor', function() {
+      editor.hooks.beforeExecute.tap('editor', function() {
         var dom = divRef.current;
         dom === null || dom === void 0
           ? void 0
           : dom.setAttribute('style', 'display: none');
       });
+      editor.hooks.execute.tap('editor', function() {
+        var _window$getSelection;
+
+        (_window$getSelection = window.getSelection()) === null ||
+        _window$getSelection === void 0
+          ? void 0
+          : _window$getSelection.removeAllRanges();
+      });
+      return function() {
+        if (ele !== null && editor.observer !== null) {
+          editor.observer.disconnect();
+        }
+      };
     },
     [config, onChange],
   );
+
+  var onMouseDown = function onMouseDown() {
+    var _window$getSelection2;
+
+    (_window$getSelection2 = window.getSelection()) === null ||
+    _window$getSelection2 === void 0
+      ? void 0
+      : _window$getSelection2.removeAllRanges();
+  }; // 控制range以及buttonview
+
+  var onMouseUp = function onMouseUp(e) {
+    e.stopPropagation();
+    var selection = document.getSelection();
+    var dom = divRef.current;
+
+    if (
+      selection === null || selection === void 0
+        ? void 0
+        : selection.isCollapsed
+    ) {
+      dom === null || dom === void 0
+        ? void 0
+        : dom.setAttribute('style', 'visibility:hidden;');
+      rangeRef.current = null;
+    } else {
+      console.log(selection);
+      var range =
+        selection === null || selection === void 0
+          ? void 0
+          : selection.getRangeAt(0);
+      var rect = range && range.getBoundingClientRect();
+
+      if (rect) {
+        rangeRef.current = range;
+        editor.setRange(range !== null && range !== void 0 ? range : null);
+        dom === null || dom === void 0
+          ? void 0
+          : dom.setAttribute(
+              'style',
+              'visibility:visible;top: '
+                .concat(
+                  (rect === null || rect === void 0 ? void 0 : rect.top) +
+                    (rect === null || rect === void 0 ? void 0 : rect.height),
+                  'px;left:',
+                )
+                .concat(
+                  (rect === null || rect === void 0 ? void 0 : rect.left) -
+                    dom.offsetWidth / 2,
+                  'px',
+                ),
+            );
+        onSelect && onSelect(e, selection);
+      } // selection && selection.removeAllRanges(); // 这个remove还是很重要的
+    }
+
+    onContainerClick && onContainerClick(e, editor);
+  }; // 处理 删除元素问题保留一个p
+
+  var onkeydownInEditable = function onkeydownInEditable(e) {
+    if (e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Paste') {
+      if ('<p><br></p>' === editor.getData().trim()) e.preventDefault();
+    }
+  };
+
+  var onDocumentMouseUp = function onDocumentMouseUp() {
+    var dom = divRef.current;
+    dom === null || dom === void 0
+      ? void 0
+      : dom.setAttribute('style', 'visibility:hidden;');
+  };
+
   React.useEffect(
     function() {
       var ele = document.getElementById(id);
 
       if (ele !== null && checkVisiblePlugin(editor)) {
-        // 处理 删除元素问题保留一个p
-        var onkeydownInEditable = function onkeydownInEditable(e) {
-          if (
-            e.key === 'Backspace' ||
-            e.key === 'Delete' ||
-            e.key === 'Paste'
-          ) {
-            if ('<p><br></p>' === editor.getData().trim()) e.preventDefault();
-          }
-        };
-
-        // 实现类似onchange 无法监控到range变化
-        // (document.getElementById(id) as any).addEventListener('input', (e: Evt) => {
-        //   onChange && onChange(e, editor.getData())
-        // })
-        ele.onmousedown = function(e) {
-          var _window$getSelection;
-
-          (_window$getSelection = window.getSelection()) === null ||
-          _window$getSelection === void 0
-            ? void 0
-            : _window$getSelection.removeAllRanges();
-        };
-
-        ele.addEventListener('keydown', onkeydownInEditable); // 控制range以及buttonview
-
-        ele.onmouseup = function(e) {
-          e.stopPropagation();
-          var selection = document.getSelection();
-          var dom = divRef.current;
-
-          if (
-            selection === null || selection === void 0
-              ? void 0
-              : selection.isCollapsed
-          ) {
-            dom === null || dom === void 0
-              ? void 0
-              : dom.setAttribute('style', 'visibility:hidden;');
-            rangeRef.current = null;
-          } else {
-            var range =
-              selection === null || selection === void 0
-                ? void 0
-                : selection.getRangeAt(0);
-            var rect = range && range.getBoundingClientRect();
-
-            if (rect) {
-              rangeRef.current = range;
-              editor.setRange(
-                range !== null && range !== void 0 ? range : null,
-              );
-              dom === null || dom === void 0
-                ? void 0
-                : dom.setAttribute(
-                    'style',
-                    'visibility:visible;top: '
-                      .concat(
-                        (rect === null || rect === void 0 ? void 0 : rect.top) +
-                          (rect === null || rect === void 0
-                            ? void 0
-                            : rect.height),
-                        'px;left:',
-                      )
-                      .concat(
-                        (rect === null || rect === void 0
-                          ? void 0
-                          : rect.left) -
-                          dom.offsetWidth / 2,
-                        'px',
-                      ),
-                  );
-              onSelect && onSelect(e, selection);
-            } // selection && selection.removeAllRanges(); // 这个remove还是很重要的
-          }
-
-          onContainerClick && onContainerClick(e, editor);
-        };
-
-        document.onmouseup = function() {
-          var dom = divRef.current;
-          dom === null || dom === void 0
-            ? void 0
-            : dom.setAttribute('style', 'visibility:hidden;');
-        };
+        ele.addEventListener('keydown', onkeydownInEditable);
+        ele.addEventListener('mousedown', onMouseDown);
+        ele.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('mouseup', onDocumentMouseUp);
       }
 
       return function() {
-        ele.onmouseup = function() {};
-
-        document.onmouseup = function() {};
+        ele === null || ele === void 0
+          ? void 0
+          : ele.removeEventListener('keydown', onkeydownInEditable);
+        ele === null || ele === void 0
+          ? void 0
+          : ele.removeEventListener('mousedown', onMouseDown);
+        ele === null || ele === void 0
+          ? void 0
+          : ele.removeEventListener('mouseup', onMouseUp);
+        document.removeEventListener('mouseup', onDocumentMouseUp);
       };
     },
     [id, onInit, config],
