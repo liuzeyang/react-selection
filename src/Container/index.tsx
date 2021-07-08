@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import './index.less';
 import { PopPluginRef } from './Plugins/pop';
 import { Config, Editor } from './Engine/editor';
-import { RenderInBody } from './Plugins/renderInBody';
 import { checkVisiblePlugin } from './utils';
 
 type Selections = Selection | null;
@@ -44,6 +43,7 @@ const Container: React.FC<ContainerProps> = ({
   // 控制pop
   const divRef = React.createRef<HTMLDivElement>();
   const rangeRef = useRef<any>(null);
+  const containerRef = useRef<any>(null);
   const [editor] = useState<Editor>(new Editor());
 
   useEffect(() => {
@@ -103,17 +103,19 @@ const Container: React.FC<ContainerProps> = ({
       dom?.setAttribute('style', 'visibility:hidden;');
       rangeRef.current = null;
     } else {
-      console.log(selection);
-
       let range = selection?.getRangeAt(0);
       let rect = range && range.getBoundingClientRect();
-      if (rect) {
+      let contianer = containerRef.current.getBoundingClientRect();
+      if (rect && contianer) {
         rangeRef.current = range;
         editor.setRange(range ?? null);
         dom?.setAttribute(
           'style',
-          `visibility:visible;top: ${rect?.top +
-            rect?.height}px;left:${rect?.left - dom.offsetWidth / 2}px`,
+          `visibility:visible;top: ${rect?.y -
+            contianer.y +
+            rect?.height}px;left:${rect?.x -
+            contianer.x -
+            dom.offsetWidth / 2}px`,
         );
         onSelect && onSelect(e, selection);
       }
@@ -151,7 +153,7 @@ const Container: React.FC<ContainerProps> = ({
   }, [id, onInit, config]);
 
   return (
-    <div className="selection-backmark">
+    <div className="selection-backmark" ref={containerRef}>
       <div
         id={id}
         className="selection-container"
@@ -159,9 +161,7 @@ const Container: React.FC<ContainerProps> = ({
         spellCheck={true}
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>
-      <RenderInBody>
-        <PopPluginRef ref={divRef} currentRange={rangeRef} editor={editor} />
-      </RenderInBody>
+      <PopPluginRef ref={divRef} currentRange={rangeRef} editor={editor} />
     </div>
   );
 };

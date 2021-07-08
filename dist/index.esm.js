@@ -1,12 +1,5 @@
-import React, {
-  forwardRef,
-  Component,
-  useRef,
-  useState,
-  useEffect,
-} from 'react';
+import React, { forwardRef, useRef, useState, useEffect } from 'react';
 import { isFunction, isObject as isObject$1 } from 'lodash';
-import ReactDom from 'react-dom';
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -28,93 +21,6 @@ function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
   return Constructor;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== 'function' && superClass !== null) {
-    throw new TypeError('Super expression must either be null or a function');
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true,
-    },
-  });
-  if (superClass) _setPrototypeOf(subClass, superClass);
-}
-
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf
-    ? Object.getPrototypeOf
-    : function _getPrototypeOf(o) {
-        return o.__proto__ || Object.getPrototypeOf(o);
-      };
-  return _getPrototypeOf(o);
-}
-
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf =
-    Object.setPrototypeOf ||
-    function _setPrototypeOf(o, p) {
-      o.__proto__ = p;
-      return o;
-    };
-
-  return _setPrototypeOf(o, p);
-}
-
-function _isNativeReflectConstruct() {
-  if (typeof Reflect === 'undefined' || !Reflect.construct) return false;
-  if (Reflect.construct.sham) return false;
-  if (typeof Proxy === 'function') return true;
-
-  try {
-    Boolean.prototype.valueOf.call(
-      Reflect.construct(Boolean, [], function() {}),
-    );
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError(
-      "this hasn't been initialised - super() hasn't been called",
-    );
-  }
-
-  return self;
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (typeof call === 'object' || typeof call === 'function')) {
-    return call;
-  }
-
-  return _assertThisInitialized(self);
-}
-
-function _createSuper(Derived) {
-  var hasNativeReflectConstruct = _isNativeReflectConstruct();
-
-  return function _createSuperInternal() {
-    var Super = _getPrototypeOf(Derived),
-      result;
-
-    if (hasNativeReflectConstruct) {
-      var NewTarget = _getPrototypeOf(this).constructor;
-
-      result = Reflect.construct(Super, arguments, NewTarget);
-    } else {
-      result = Super.apply(this, arguments);
-    }
-
-    return _possibleConstructorReturn(this, result);
-  };
 }
 
 function _slicedToArray(arr, i) {
@@ -220,7 +126,7 @@ var css_248z =
 styleInject(css_248z);
 
 var css_248z$1 =
-  ':root {\n  --ck-color-shadow-drop: rgba(0, 0, 0, 0.15);\n  --ck-color-shadow-drop-active: rgba(0, 0, 0, 0.2);\n}\n.jason-design-pop-plugin {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 10px 0 0 0;\n  font-size: 14px;\n  color: rgba(0, 0, 0, 0.85);\n  line-height: 1.5715;\n  position: absolute;\n  z-index: 1030;\n  font-weight: 400;\n  white-space: normal;\n  text-align: left;\n  cursor: pointer;\n}\n.jason-design-pop-plugin .jason-design-pop-content {\n  box-sizing: border-box;\n}\n.jason-design-pop-plugin .jason-design-pop-content .jason-design-pop-arrow {\n  left: 50%;\n  box-sizing: border-box;\n  transform: translateX(-50%) rotate(-135deg);\n  top: 6.2px;\n  border-color: #e5e5e5;\n  --ck-drop-shadow: 0 1px 2px 1px var(--ck-color-shadow-drop);\n  --ck-drop-shadow-active: 0 3px 6px 1px var(--ck-color-shadow-drop-active);\n  position: absolute;\n  display: block;\n  width: 8.48528137px;\n  height: 8.48528137px;\n  background: 0 0;\n  border-style: solid;\n  border-width: 4.24264069px;\n}\n.jason-design-pop-plugin .jason-design-pop-content .jason-design-pop-inner-content {\n  box-sizing: border-box;\n  box-shadow: 2px, 0 0;\n  min-height: 15px;\n  background: #e5e5e5;\n  color: rgba(0, 0, 0, 0.85);\n  border: 1px solid #e5e5e5;\n  padding: 5px;\n}\n';
+  ':root {\n  --ck-color-shadow-drop: rgba(0, 0, 0, 0.15);\n  --ck-color-shadow-drop-active: rgba(0, 0, 0, 0.2);\n}\n.jason-design-pop-plugin {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 10px 0 0 0;\n  font-size: 14px;\n  color: rgba(0, 0, 0, 0.85);\n  line-height: 1.5715;\n  position: absolute;\n  z-index: 1030;\n  font-weight: 400;\n  white-space: normal;\n  text-align: left;\n  cursor: pointer;\n  visibility: hidden;\n}\n.jason-design-pop-plugin .jason-design-pop-content {\n  box-sizing: border-box;\n}\n.jason-design-pop-plugin .jason-design-pop-content .jason-design-pop-arrow {\n  left: 50%;\n  box-sizing: border-box;\n  transform: translateX(-50%) rotate(-135deg);\n  top: 6.2px;\n  border-color: #e5e5e5;\n  --ck-drop-shadow: 0 1px 2px 1px var(--ck-color-shadow-drop);\n  --ck-drop-shadow-active: 0 3px 6px 1px var(--ck-color-shadow-drop-active);\n  position: absolute;\n  display: block;\n  width: 8.48528137px;\n  height: 8.48528137px;\n  background: 0 0;\n  border-style: solid;\n  border-width: 4.24264069px;\n}\n.jason-design-pop-plugin .jason-design-pop-content .jason-design-pop-inner-content {\n  box-sizing: border-box;\n  box-shadow: 2px, 0 0;\n  min-height: 15px;\n  background: #e5e5e5;\n  color: rgba(0, 0, 0, 0.85);\n  border: 1px solid #e5e5e5;\n  padding: 5px;\n}\n';
 styleInject(css_248z$1);
 
 var isObject = function isObject(range) {
@@ -526,60 +432,6 @@ var Editor = /*#__PURE__*/ (function() {
   return Editor;
 })();
 
-var RenderInBody = /*#__PURE__*/ (function(_Component) {
-  _inherits(RenderInBody, _Component);
-
-  var _super = _createSuper(RenderInBody);
-
-  function RenderInBody(props) {
-    _classCallCheck(this, RenderInBody);
-
-    return _super.call(this, props);
-  }
-
-  _createClass(RenderInBody, [
-    {
-      key: 'componentDidMount',
-      value: function componentDidMount() {
-        //新建一个div标签并塞进body
-        this.popup = document.createElement('div');
-        document.body.appendChild(this.popup);
-
-        this._renderLayer();
-      },
-    },
-    {
-      key: 'componentDidUpdate',
-      value: function componentDidUpdate() {
-        this._renderLayer();
-      },
-    },
-    {
-      key: 'componentWillUnmount',
-      value: function componentWillUnmount() {
-        //在组件卸载的时候，保证弹层也被卸载掉
-        ReactDom.unmountComponentAtNode(this.popup);
-        document.body.removeChild(this.popup);
-      },
-    },
-    {
-      key: '_renderLayer',
-      value: function _renderLayer() {
-        //将弹层渲染到body下的div标签
-        ReactDom.render(this.props.children, this.popup);
-      },
-    },
-    {
-      key: 'render',
-      value: function render() {
-        return null;
-      },
-    },
-  ]);
-
-  return RenderInBody;
-})(Component);
-
 var checkVisiblePlugin = function checkVisiblePlugin(editor) {
   return (
     editor.buttonView.filter(function(button) {
@@ -609,6 +461,7 @@ var Container = function Container(_ref) {
   // 控制pop
   var divRef = /*#__PURE__*/ React.createRef();
   var rangeRef = useRef(null);
+  var containerRef = useRef(null);
 
   var _useState = useState(new Editor()),
     _useState2 = _slicedToArray(_useState, 1),
@@ -703,14 +556,14 @@ var Container = function Container(_ref) {
         : dom.setAttribute('style', 'visibility:hidden;');
       rangeRef.current = null;
     } else {
-      console.log(selection);
       var range =
         selection === null || selection === void 0
           ? void 0
           : selection.getRangeAt(0);
       var rect = range && range.getBoundingClientRect();
+      var contianer = containerRef.current.getBoundingClientRect();
 
-      if (rect) {
+      if (rect && contianer) {
         rangeRef.current = range;
         editor.setRange(range !== null && range !== void 0 ? range : null);
         dom === null || dom === void 0
@@ -719,12 +572,14 @@ var Container = function Container(_ref) {
               'style',
               'visibility:visible;top: '
                 .concat(
-                  (rect === null || rect === void 0 ? void 0 : rect.top) +
+                  (rect === null || rect === void 0 ? void 0 : rect.y) -
+                    contianer.y +
                     (rect === null || rect === void 0 ? void 0 : rect.height),
                   'px;left:',
                 )
                 .concat(
-                  (rect === null || rect === void 0 ? void 0 : rect.left) -
+                  (rect === null || rect === void 0 ? void 0 : rect.x) -
+                    contianer.x -
                     dom.offsetWidth / 2,
                   'px',
                 ),
@@ -779,6 +634,7 @@ var Container = function Container(_ref) {
     'div',
     {
       className: 'selection-backmark',
+      ref: containerRef,
     },
     /*#__PURE__*/ React.createElement('div', {
       id: id,
@@ -789,15 +645,11 @@ var Container = function Container(_ref) {
         __html: html,
       },
     }),
-    /*#__PURE__*/ React.createElement(
-      RenderInBody,
-      null,
-      /*#__PURE__*/ React.createElement(PopPluginRef, {
-        ref: divRef,
-        currentRange: rangeRef,
-        editor: editor,
-      }),
-    ),
+    /*#__PURE__*/ React.createElement(PopPluginRef, {
+      ref: divRef,
+      currentRange: rangeRef,
+      editor: editor,
+    }),
   );
 };
 
