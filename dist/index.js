@@ -533,11 +533,6 @@ var Container = function Container(_ref) {
           ? void 0
           : _window$getSelection.removeAllRanges();
       });
-      return function() {
-        if (ele !== null && editor.observer !== null) {
-          editor.observer.disconnect();
-        }
-      };
     },
     [config, onChange],
   );

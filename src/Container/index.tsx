@@ -83,11 +83,6 @@ const Container: React.FC<ContainerProps> = ({
     editor.hooks.execute.tap('editor', () => {
       window.getSelection()?.removeAllRanges();
     });
-    return () => {
-      if (ele !== null && editor.observer !== null) {
-        editor.observer.disconnect();
-      }
-    };
   }, [config, onChange]);
 
   const onMouseDown = () => {
