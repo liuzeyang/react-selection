@@ -50,6 +50,9 @@ const Container: React.FC<ContainerProps> = ({
     document.execCommand('defaultParagraphSeparator', false, 'p');
     onInit && onInit(editor);
     editor.init(config);
+    return () => {
+      editor.observer?.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -78,7 +81,7 @@ const Container: React.FC<ContainerProps> = ({
     }
     editor.hooks.beforeExecute.tap('editor', () => {
       const dom = divRef.current;
-      dom?.setAttribute('style', 'display: none');
+      dom?.setAttribute('style', 'visibility:hidden;');
     });
     editor.hooks.execute.tap('editor', () => {
       window.getSelection()?.removeAllRanges();

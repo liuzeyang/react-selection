@@ -25,8 +25,28 @@ class Slot extends AbstractPlugin {
     });
   }
 }
+
+class Slots extends AbstractPlugin {
+  init() {
+    let button = new ButtonView();
+    button.set({
+      label: '添加分d支',
+    });
+    this.listenTo(button, e => {
+      let range = this.editor.range;
+      const newNode = document.createElement('variable');
+      newNode.setAttribute('contenteditable', 'false');
+      newNode.classList.add('huaci');
+      newNode.style.backgroundColor = 'blue';
+      let con = range.extractContents();
+      newNode.append(con);
+      range.insertNode(newNode);
+      window.getSelection()?.removeAllRanges();
+    });
+  }
+}
 const config = {
-  plugins: [Slot],
+  plugins: [Slot, Slots],
 };
 export default () => {
   let [count, setCount] = React.useState(1);
