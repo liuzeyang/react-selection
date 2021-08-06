@@ -610,7 +610,7 @@ var Container = function Container(_ref) {
     }
   };
 
-  var onDocumentMouseUp = function onDocumentMouseUp() {
+  var onDocumentMouseDown = function onDocumentMouseDown() {
     var dom = divRef.current;
     dom === null || dom === void 0
       ? void 0
@@ -625,7 +625,7 @@ var Container = function Container(_ref) {
         ele.addEventListener('keydown', onkeydownInEditable);
         ele.addEventListener('mousedown', onMouseDown);
         ele.addEventListener('mouseup', onMouseUp);
-        document.addEventListener('mouseup', onDocumentMouseUp);
+        document.addEventListener('mousedown', onDocumentMouseDown);
       }
 
       return function() {
@@ -638,7 +638,7 @@ var Container = function Container(_ref) {
         ele === null || ele === void 0
           ? void 0
           : ele.removeEventListener('mouseup', onMouseUp);
-        document.removeEventListener('mouseup', onDocumentMouseUp);
+        document.removeEventListener('mousedown', onDocumentMouseDown);
       };
     },
     [id, onInit, config],

@@ -89,6 +89,22 @@ export default () => {
           setEditor(editor);
         }}
       />
+      <Container
+        id="ddddf"
+        html='<p>大幅度<variable contenteditable="false" class="huaci" style="background-color: blue;">发发送到发</variable>打的发发生</p>
+'
+        onChange={data => {
+          console.log('change', data);
+        }}
+        config={config}
+        onContainerClick={e => {
+          console.log(222);
+        }}
+        onInit={editor => {
+          setEditor(editor);
+        }}
+      />
+
       {visible && (
         <div
           onClick={() => {

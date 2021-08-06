@@ -128,7 +128,7 @@ const Container: React.FC<ContainerProps> = ({
     }
   };
 
-  const onDocumentMouseUp = () => {
+  const onDocumentMouseDown = () => {
     const dom = divRef.current;
     dom?.setAttribute('style', 'visibility:hidden;');
   };
@@ -139,14 +139,14 @@ const Container: React.FC<ContainerProps> = ({
       ele.addEventListener('keydown', onkeydownInEditable);
       ele.addEventListener('mousedown', onMouseDown);
       ele.addEventListener('mouseup', onMouseUp);
-      document.addEventListener('mouseup', onDocumentMouseUp);
+      document.addEventListener('mousedown', onDocumentMouseDown);
     }
 
     return () => {
       ele?.removeEventListener('keydown', onkeydownInEditable);
       ele?.removeEventListener('mousedown', onMouseDown);
       ele?.removeEventListener('mouseup', onMouseUp);
-      document.removeEventListener('mouseup', onDocumentMouseUp);
+      document.removeEventListener('mousedown', onDocumentMouseDown);
     };
   }, [id, onInit, config]);
 
